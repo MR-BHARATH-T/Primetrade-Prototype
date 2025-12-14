@@ -8,6 +8,7 @@ if (process.env.NODE_ENV !== 'production') {
 
 const required = ['MONGODB_URI', 'JWT_SECRET', 'CLIENT_ORIGIN'];
 for (const key of required) {
+  console.log(`Checking ${key}:`, process.env[key] ? 'SET' : 'NOT SET');
   if (!process.env[key]) {
     throw new Error(`Missing required env var: ${key}`);
   }
