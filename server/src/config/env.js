@@ -1,7 +1,10 @@
 const dotenv = require('dotenv');
 const path = require('path');
 
-dotenv.config({ path: path.resolve(__dirname, '../../.env') });
+// Only load .env file in development
+if (process.env.NODE_ENV !== 'production') {
+  dotenv.config({ path: path.resolve(__dirname, '../../.env') });
+}
 
 const required = ['MONGODB_URI', 'JWT_SECRET', 'CLIENT_ORIGIN'];
 for (const key of required) {
