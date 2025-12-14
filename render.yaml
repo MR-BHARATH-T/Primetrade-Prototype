@@ -1,0 +1,38 @@
+services:
+  # Backend (Node.js/Express)
+  - type: web
+    name: primetrade-api
+    env: node
+    repo: https://github.com/YOUR_USERNAME/primetrade
+    rootDir: server
+    buildCommand: npm install
+    startCommand: npm start
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: PORT
+        value: 5000
+      - key: MONGODB_URI
+        sync: false # Set in Render dashboard
+      - key: JWT_SECRET
+        sync: false # Set in Render dashboard
+      - key: JWT_EXPIRES_IN
+        value: 15m
+      - key: CLIENT_ORIGIN
+        sync: false # Set to your frontend URL (e.g., https://primetrade.onrender.com)
+
+  # Frontend (Static React)
+  - type: web
+    name: primetrade-frontend
+    env: static
+    repo: https://github.com/YOUR_USERNAME/primetrade
+    rootDir: client
+    buildCommand: npm run build
+    publishPath: dist
+    envVars:
+      - key: VITE_API_BASE
+        value: https://primetrade-api.onrender.com/api/v1
+    routes:
+      - type: rewrite
+        source: /.*
+        destination: /index.html
